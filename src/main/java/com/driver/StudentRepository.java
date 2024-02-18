@@ -48,20 +48,31 @@ public class StudentRepository {
         return teacherRepo.getOrDefault(name, null);
     }
     public List<String> getStudentsByTeacherName(String teacher){
-        return teacherStudentRepo.getOrDefault(teacher,new ArrayList<String>());
+        return teacherStudentRepo.getOrDefault(teacher,new ArrayList<>());
     }
     public List<String> getAllStudents(){
-        ArrayList<String> temp=new ArrayList<>();
-        for(String name:studentRepo.keySet())
-            temp.add(name);
-        return temp;
+//        ArrayList<String> temp=new ArrayList<>();
+//        for(String name:studentRepo.keySet())
+//            temp.add(name);
+//        return temp;
+        return new ArrayList<>(studentRepo.keySet());
     }
     public void deleteTeacherByName(String teacher){
+        //removing students who are assigned to given teacher also
+        for(String name:teacherStudentRepo.get(teacher))
+            studentRepo.remove(name);
+
+        //removing teacher
         teacherRepo.remove(teacher);
         teacherStudentRepo.remove(teacher);
     }
     public void deleteAllTeachers(){
-        teacherRepo.clear();
+        //removing all students that are linked to teachers also
+        for(String teacher:teacherRepo.keySet()){
+            deleteTeacherByName(teacher);
+            teacherRepo.remove(teacher);
+        }
+       // teacherRepo.clear();
         teacherStudentRepo.clear();
     }
 }
