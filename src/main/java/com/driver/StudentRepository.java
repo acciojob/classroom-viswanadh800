@@ -37,6 +37,9 @@ public class StudentRepository {
             temp.add(student);
             teacherStudentRepo.put(teacher,temp);
         }
+        Teacher teacherObj=teacherRepo.get(teacher);
+        teacherObj.setNumberOfStudents(teacherObj.getNumberOfStudents()+1);
+
     }
     public Student getStudentByName(String name){
         return studentRepo.getOrDefault(name, null);

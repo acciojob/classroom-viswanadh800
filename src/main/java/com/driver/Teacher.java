@@ -16,6 +16,11 @@ public class Teacher {
         this.numberOfStudents = numberOfStudents;
         this.age = age;
     }
+    public Teacher(String name, int age) {
+        this.name = name;
+        this.numberOfStudents =0;
+        this.age = age;
+    }
 
     public String getName() {
         return name;
